@@ -21,7 +21,6 @@ export const nextauthOptions: NextAuthOptions = {
         password: { label: "Password", type: "password", required: true }
       },
       async authorize(credentials) {
-        // console.log(credentials)
         if (!credentials?.email || !credentials?.password) {
           return null
         }
@@ -30,29 +29,23 @@ export const nextauthOptions: NextAuthOptions = {
           email: credentials?.email,
           password: credentials?.password
         })
-
-        // console.log({user})
         return user
       }
     })
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      // console.log({account, profile})
       if (account?.type === "oauth" && profile) {
         return await signInWithOauth({account, profile})
       }
       return true
     },
     async jwt({ token, trigger, session }) {
-      // console.log({token})
-      // console.log({trigger, session})
       if (trigger === "update") {
         token.name = session.name
       } else {
         if (token.email) {
           const user = await getUserByEmail({email: token.email})
-          // console.log({user})
           token.name = user.name;
           token._id = user._id;
           token.role = user.role;
@@ -63,7 +56,6 @@ export const nextauthOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      // console.log({session, token})
       return {
         ...session,
         user: {

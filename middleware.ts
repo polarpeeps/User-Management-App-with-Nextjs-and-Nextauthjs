@@ -13,7 +13,7 @@ export default withAuth(
     const { token } = req.nextauth
     const { pathname, origin } = req.nextUrl
 
-    if (pathname.startsWith("/dashboard") && token?.role !== "admin") {
+    if (pathname.startsWith("/admin") && token?.role !== "admin") {
       return NextResponse.redirect(`${origin}/unauthorized`)
     }
   },
