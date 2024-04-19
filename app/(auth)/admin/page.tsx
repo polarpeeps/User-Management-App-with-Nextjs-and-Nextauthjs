@@ -5,21 +5,32 @@ import Pagination from "@/components/dashboard/Pagination";
 import styles from "./users.module.css"
 import Image from "next/image";
 import Link from "next/link";
+import Search  from "./search";
 
-const AdminsPage = async () => {
-  const q  = 1;
-  const page = 1;
+const AdminsPage = async (
+  {searchParams}:{
+    searchParams?:{
+      query?:string;
+      page?:number;
+    }
+  }
+) => {
+  const q  = searchParams?.query || "";
+  const page = searchParams?.page || 1;
   const { count, users } = await fetchUsers(q, page);
   return (
-    <section className="flex mt-32 h-full w-100">
-      <div className={styles.container}>
-        <div className={styles.top}>
-          {/* <Search placeholder="Search for a user..." /> */}
-          <h2>Welcome Admin</h2>
-          <Link href="/admin/add">
-            <button type="button" className="btn-primarypy-3 p-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-500 text-white hover:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">Create New User</button>
-          </Link>
-        </div>
+    <section className=" mt-32 h-full w-100">
+      <div className={`${styles.top} fixed`}>
+        {/* <Search placeholder="Search for a user..." /> */}
+        {/* <Search /> */}
+        <h2>Welcome Admin</h2>
+        <Search />
+        <Link href="/admin/add">
+          <button type="button" className="btn-primarypy-3 p-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-green-500 text-white hover:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">Create New User</button>
+        </Link>
+      </div>
+      <div className={`${styles.container} containerScrollable containerRelative`}>
+        
         <div className="overflow-auto">
           <table className={styles.table}>
             <thead>

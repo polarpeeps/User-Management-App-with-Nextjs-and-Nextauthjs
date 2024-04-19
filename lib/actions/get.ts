@@ -6,14 +6,13 @@ import bcrypt from 'bcrypt'
 import { redirect } from "next/navigation";
 export const fetchUsers = async (q:any, page:any) => {
   const regex = new RegExp(q, "i");
-  const ITEM_PER_PAGE = 30;
+  const ITEM_PER_PAGE = 5;
   try {
     await connectDB();
-    const count = await User.find({ role: "user" }).count();
-    const users = await User.find({ role: "user" })
+    const count = await User.find({ name: { $regex: regex },role:"user"  }).count();
+    const users = await User.find({ name: { $regex: regex },role:"user" })
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1));
-    // console.log(users)
     return { count, users };
   } catch (err) {
     console.log(err);

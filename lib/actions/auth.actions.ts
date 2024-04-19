@@ -63,36 +63,6 @@ export async function getUserByEmail({
   return {...user._doc, _id: user._id.toString()}
 }
 
-export interface UpdateUserProfileParams {
-  name: string
-}
-
-export async function updateUserProfile({
-  name
-}: UpdateUserProfileParams) {
-  const session = await getServerSession(nextauthOptions)
-  // console.log(session)
-
-  connectDB()
-
-  try {
-    if (!session) {
-      throw new Error("Unauthorization!")
-    }
-
-    const user = await User.findByIdAndUpdate(session?.user?._id, {
-      name
-    }, { new: true }).select("-password")
-
-    if (!user) {
-      throw new Error ("User does not exist!")
-    }
-
-    return { success: true }
-  } catch (error) {
-    redirect(`/error?error=${(error as Error).message}`)
-  }
-}
 
 export interface SignUpWithCredentialsParams {
   name: string,

@@ -14,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({ count }) => {
   const page = parseInt(searchParams.get("page") || "1", 10);
 
   const params = new URLSearchParams(searchParams.toString());
-  const ITEM_PER_PAGE = 2;
+  const ITEM_PER_PAGE = 5;
 
   const hasPrev = ITEM_PER_PAGE * (page - 1) > 0;
   const hasNext = ITEM_PER_PAGE * (page - 1) + ITEM_PER_PAGE < count;

@@ -10,8 +10,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
   }
-  
+  /* Add to your users.module.css */
+.topSticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures it stays above other content */
+  background-color: white; /* or any background */
+  padding: 10px 0; /* Optional: for spacing */
+  border-bottom: 2px solid #f0f0f0; /* Optional: for styling */
+}
+
+.containerScrollable {
+  overflow-y: auto;
+  max-height: 90vh; /* Adjust based on your needs */
+}
+
+/* Ensure the direct parent of .topSticky has a relative position if it's not already positioned */
+.containerRelative {
+  position: relative;
+}
+
   .addButton{
     padding: 10px;
     background-color: #5d57c9;

@@ -1,9 +1,10 @@
 "use client"
 import React, { useState, useEffect, FormEvent } from 'react';
 import styles from '@/lib/actions/addUser.module.css';
-import { getUserById,updateUser } from '@/lib/actions/update';
+import { getUserById, updateUserOrgandName } from '@/lib/actions/update';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 type Tenant = {
   tenantName: string;
   role: string;
@@ -16,39 +17,19 @@ interface User {
   email: string;
 }
 
-const EditUserPage= () => {
+const UpdateUserPage= () => {
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [user, setUser] = useState<User | null>(null);
-  const router = useSearchParams();
-  const id  = router.get("id");
-  const navigator=useRouter()
-  // const pathname=usePathna me();
-  // console.log(pathname)
-  // no need to fetch old data as you might now what to changes
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     if (typeof id === 'string') {
-  //       const userData = await getUserById(id);
-  //       if (userData) {
-  //         const plainUserData: User = JSON.parse(JSON.stringify(userData));
-  //         setUser(plainUserData);
-  //         // Update tenants state only when userData is available
-  //         // setTenants(plainUserData.tenants);
-  //       }
-  //     }
-  //   };
-  
-  //   fetchUserData();
-  
-  // }, );
-  
-  // console.log(user)
-  // setTenants(user?.tenants);
-
-  // console.log(user)
+  const {data: session }=useSession();
+  // console.log(session?.user.id)
+  const id=session?.user._id;
+  const pname=session?.user.name;
+  const pemail=session?.user.email;
+  const showtens=session?.user.tenant;
+  if(showtens){
+    setTenants(session?.user.tenant)
+  }
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant
@@ -74,8 +55,7 @@ const EditUserPage= () => {
 
     try {
       // console.log(formData)
-      await updateUser( id!,formData);
-      navigator.push("/admin")
+      await updateUserOrgandName( id!,formData);
     } catch (error:any) {
       console.error('Failed to update user:', error.message);
     }
@@ -90,15 +70,15 @@ const EditUserPage= () => {
           {/* Name Field */}
           <div className="max-w-sm">
             <label htmlFor="name-input" className="block text-sm font-medium mb-2 dark:text-white">
-    Name
+            Name
             </label>
             <input
               type="text"
               id="name-input"
               name="name"
               className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
-              placeholder="Change Name"
-              // placeholder={user?.name}
+              // placeholder="Change Name"
+              placeholder={pname}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -113,24 +93,9 @@ const EditUserPage= () => {
               id="email-input"
               name="email"
               className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
-              placeholder="Change Email"
-              // placeholder={user?.email}
+              // placeholder="Change Email"
+              placeholder={pemail}
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="max-w-sm">
-            <label htmlFor="password-input" className="block text-sm font-medium mb-2 dark:text-white">
-    Password (Leave blank to keep unchanged)
-            </label>
-            <input
-              type="password"
-              id="password-input"
-              name="password"
-              className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
-              placeholder="********"
-              // value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -176,11 +141,22 @@ const EditUserPage= () => {
             className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] mt-4"
             type="submit"
           >
-  Update User
+  Update Profile
           </button>
         </form>
+        
       </div>
+      {session?.user.provider === "credentials" && <>
+        <div className="flex items-center justify-center mt-4 mb-8">
+          <div className="border-b border-gray-400 w-full"></div>
+        </div>
+        <p className="text-center text-sm text-gray-600 mt-2">
+          <Link className="text-blue-600 hover:underline" href="/change-password">
+            Change Password
+          </Link>
+        </p>
+      </>}
     </section>
   );
 };
-export default EditUserPage;
+export default UpdateUserPage;
