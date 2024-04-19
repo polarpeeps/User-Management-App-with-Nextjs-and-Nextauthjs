@@ -1,6 +1,6 @@
 export { default } from "next-auth/middleware"
 
-export const config = { matcher: ["/loda"] }
+export const config = { matcher: ["/nota"] }
 
 // import { withAuth } from "next-auth/middleware"
 // import { NextResponse } from "next/server"
