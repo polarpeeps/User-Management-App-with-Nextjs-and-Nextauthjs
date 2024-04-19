@@ -1,6 +1,6 @@
 export { default } from "next-auth/middleware"
 
-export const config = { matcher: ["/profile","/user"] }
+export const config = { matcher: ["/profile"] }
 
 // import { withAuth } from "next-auth/middleware"
 // import { NextResponse } from "next/server"
