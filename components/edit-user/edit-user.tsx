@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useEffect, FormEvent } from 'react';
 import styles from '@/lib/actions/addUser.module.css';
-import { getUserById,updateUser } from '@/lib/actions/update';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { getUserById, updateUser } from '@/lib/actions/update';
+import {  useRouter, useSearchParams } from 'next/navigation';
 
 type Tenant = {
   tenantName: string;
@@ -25,30 +25,7 @@ const EditUserPage= () => {
   const router = useSearchParams();
   const id  = router.get("id");
   const navigator=useRouter()
-  // const pathname=usePathna me();
-  // console.log(pathname)
-  // no need to fetch old data as you might now what to changes
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     if (typeof id === 'string') {
-  //       const userData = await getUserById(id);
-  //       if (userData) {
-  //         const plainUserData: User = JSON.parse(JSON.stringify(userData));
-  //         setUser(plainUserData);
-  //         // Update tenants state only when userData is available
-  //         // setTenants(plainUserData.tenants);
-  //       }
-  //     }
-  //   };
-  
-  //   fetchUserData();
-  
-  // }, );
-  
-  // console.log(user)
-  // setTenants(user?.tenants);
 
-  // console.log(user)
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant
@@ -98,7 +75,7 @@ const EditUserPage= () => {
               name="name"
               className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
               placeholder="Change Name"
-              // placeholder={user?.name}
+              // placeholder={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -133,36 +110,32 @@ const EditUserPage= () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          {/* Tenant Fields */}
           {tenants.map((tenant, index) => (
-            <div key={index} className="flex flex-col gap-4">
+            <div key={index} className="flex-col gap-4">
               <input
                 type="text"
                 placeholder="Tenant Name"
                 value={tenant.tenantName}
                 onChange={(e) => handleTenantChange(index, 'tenantName', e.target.value)}
+                required
                 className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
               />
               <input
                 type="text"
                 placeholder="Role"
-                value={tenant.role}
+                // value={tenant.role}
                 onChange={(e) => handleTenantChange(index, 'role', e.target.value)}
                 className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
               />
               {tenants.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveTenantField(index)}
+                <button type="button" onClick={() => handleRemoveTenantField(index)}
                   className="cursor-pointer transition-all bg-red-500 text-white px-6 py-2 rounded-lg border-orange-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
                 >
-        Remove Tenant
+                  Remove Tenant
                 </button>
               )}
             </div>
           ))}
-
           <button
             type="button"
             onClick={handleAddTenantField}

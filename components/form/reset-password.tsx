@@ -50,8 +50,7 @@ const ResetPassword = ({ params }: ResetPasswordProps) => {
 
       try {
         setLoading(true)
-
-        const apiRes = await axios.post(RESET_PASSWORD_API_URL, {
+        const apiRes = await axios.post(`/api/auth/reset-password`, {
           password: data.password,
           resetToken: params.token
         })

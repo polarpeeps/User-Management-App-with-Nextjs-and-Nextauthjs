@@ -26,10 +26,10 @@ const UpdateUserPage= () => {
   const id=session?.user._id;
   const pname=session?.user.name;
   const pemail=session?.user.email;
-  const showtens=session?.user.tenant;
-  if(showtens){
-    setTenants(session?.user.tenant)
-  }
+  // const showtens=session?.user.tenant;
+  // if(showtens){
+  //   setTenants(session?.user.tenant)
+  // }
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant

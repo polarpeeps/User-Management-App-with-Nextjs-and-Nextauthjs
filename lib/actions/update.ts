@@ -4,6 +4,7 @@ import User from "../models/user.model";
 import connectDB from "../mongodb";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import TenantModel from "../models/tenants.model";
 
 type Tenant = {
   tenantName: string;
@@ -15,7 +16,10 @@ type FormDataEntries = {
   email: string;
   password: string;
   tenants: string; 
+  industry:string;
+  description:string;
 };
+
 
 export const updateUser = async (id:string,formData: FormData): Promise<void> => {
   const entries = Object.fromEntries(formData) as unknown as FormDataEntries;
@@ -77,13 +81,14 @@ export const updateUserOrgandName = async (id:string,formData: FormData): Promis
 };
 
 
+
 export const getUserById = async (userId: string): Promise<typeof User | null> => {
   try {
     await connectDB();
     const user = await User.findById(userId).select("tenant email password name role -_id");
     return user;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
+  } catch (error:any) {
+    console.error('Failed to fetch user:', error.message);
     throw new Error('Error fetching user from database.');
   }
 };

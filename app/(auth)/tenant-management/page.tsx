@@ -1,9 +1,10 @@
 import { TenantCarosal } from "@/components/carousal/tenant-carousal"
+import TenantPage from "./tenant-comp"
 
 
 const UserPage = () => {
   return (
-    <TenantCarosal />
+    <TenantPage />
     // <h1>Hello</h1>
   )
 }

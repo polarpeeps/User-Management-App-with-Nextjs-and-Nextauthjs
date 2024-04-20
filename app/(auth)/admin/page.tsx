@@ -6,7 +6,6 @@ import styles from "./users.module.css"
 import Image from "next/image";
 import Link from "next/link";
 import Search  from "./search";
-
 const AdminsPage = async (
   {searchParams}:{
     searchParams?:{
@@ -19,10 +18,8 @@ const AdminsPage = async (
   const page = searchParams?.page || 1;
   const { count, users } = await fetchUsers(q, page);
   return (
-    <section className=" mt-32 h-full w-100">
+    <div className=" mt-32 h-full w-100">
       <div className={`${styles.top} fixed`}>
-        {/* <Search placeholder="Search for a user..." /> */}
-        {/* <Search /> */}
         <h2>Welcome Admin</h2>
         <Search />
         <Link href="/admin/add">
@@ -89,7 +86,7 @@ const AdminsPage = async (
         </div>
         <Pagination count={count} />
       </div>
-    </section>
+    </div>
   );
 };
 
