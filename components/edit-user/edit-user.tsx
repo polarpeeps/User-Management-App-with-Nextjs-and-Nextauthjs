@@ -1,7 +1,7 @@
 "use client"
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import styles from '@/lib/actions/addUser.module.css';
-import { getUserById, updateUser } from '@/lib/actions/update';
+import {  updateUser } from '@/lib/actions/update';
 import {  useRouter, useSearchParams } from 'next/navigation';
 
 type Tenant = {
@@ -50,7 +50,6 @@ const EditUserPage= () => {
     formData.append('tenants', sendTen);
 
     try {
-      // console.log(formData)
       await updateUser( id!,formData);
       navigator.push("/admin")
     } catch (error:any) {
