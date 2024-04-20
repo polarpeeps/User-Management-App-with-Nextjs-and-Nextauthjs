@@ -1,10 +1,11 @@
-
 "use client"
 import React, { useState, FormEvent } from 'react';
 import { addUser } from '@/lib/actions/add';
 import styles from '@/lib/actions/addUser.module.css';
-import { FormMessage } from '@/components/ui/form';
 import { useRouter } from 'next/navigation'
+import {  useToast } from '@/components/ui/use-toast';
+import { useSession } from 'next-auth/react';
+import Loader from '@/components/loader/Loader';
 import Link from 'next/link';
 type Tenant = {
   tenantName: string;
@@ -12,8 +13,14 @@ type Tenant = {
 };
 
 const AddUserPage: React.FC = () => {
+  
   const [tenants, setTenants] = useState<Tenant[]>([{ tenantName: '', role: 'user' }]);
   const navigator=useRouter()
+  const {toast}=useToast();
+  const { data: session, status } = useSession();
+  if (status === "loading") {
+    return <Loader />;
+  }
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant
@@ -36,6 +43,9 @@ const AddUserPage: React.FC = () => {
     formData.append('tenants',sendTen );
     try {
       await addUser(formData);
+      toast({
+        title: "User Added Successfully"
+      })
       navigator.push("/admin")
     } catch (error) {
       console.error('Failed to add user:', error);

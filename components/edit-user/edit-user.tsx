@@ -3,7 +3,7 @@ import React, { useState, FormEvent } from 'react';
 import styles from '@/lib/actions/addUser.module.css';
 import {  updateUser } from '@/lib/actions/update';
 import {  useRouter, useSearchParams } from 'next/navigation';
-
+import { useToast } from '../ui/use-toast';
 type Tenant = {
   tenantName: string;
   role: string;
@@ -25,7 +25,7 @@ const EditUserPage= () => {
   const router = useSearchParams();
   const id  = router.get("id");
   const navigator=useRouter()
-
+  const {toast}=useToast();
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant
@@ -51,6 +51,9 @@ const EditUserPage= () => {
 
     try {
       await updateUser( id!,formData);
+      toast({
+        title: "User Updated Successfully"
+      })
       navigator.push("/admin")
     } catch (error:any) {
       console.error('Failed to update user:', error.message);

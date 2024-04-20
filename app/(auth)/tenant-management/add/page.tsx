@@ -5,11 +5,12 @@ import styles from '@/lib/actions/addUser.module.css';
 import { FormMessage } from '@/components/ui/form';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
-import { toast } from '@/components/ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 
 const AddUserPage: React.FC = () => {
   const navigator=useRouter()
+  const {toast}=useToast()
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
