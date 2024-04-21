@@ -30,6 +30,7 @@ export const fetchTenants = async (q:any, page:any) => {
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1));
     return { count, tens };
+
   } catch (err) {
     console.log(err);
     throw new Error("Failed to fetch users!");

@@ -24,22 +24,17 @@ export async function POST(req:Request){
     })
     // send reset mail
     const resetPasswordLink=`${process.env.NEXTAUTH_URL}/reset-password/${tokenRes.token}`
-    console.log(resetPasswordLink);
-    // console.log(email)
     resend.emails.send({
       from: 'user-manage <onboarding@resend.dev>',
       to: `${email}`,
       subject: 'Reset Password Link',
       html: `<p>Click here to reset your password - ${resetPasswordLink}</p>`
     });
-
     return NextResponse.json({
       success:true,
-      message:"Please follow instructions to reset password. If email is not received checck spam folder"
+      message:"Please follow instructions to reset password. If email is not received check spam folder"
     })
-    
   } catch (error:any) {
-    console.log("error reset mailst")
     return NextResponse.json({
       success:false,
       error:error

@@ -4,6 +4,7 @@ import styles from '@/lib/actions/addUser.module.css';
 import {  updateUser } from '@/lib/actions/update';
 import {  useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '../ui/use-toast';
+import { Link } from 'lucide-react';
 type Tenant = {
   tenantName: string;
   role: string;
@@ -58,6 +59,9 @@ const EditUserPage= () => {
     } catch (error:any) {
       console.error('Failed to update user:', error.message);
     }
+  };
+  const handleButtonClick = () => {
+    navigator.push('/admin');
   };
 
   return (
@@ -152,6 +156,12 @@ const EditUserPage= () => {
             type="submit"
           >
   Update User
+          </button>
+          <button
+            onClick={handleButtonClick}
+            className="cursor-pointer transition-all bg-red-500 text-white px-6 py-2 rounded-lg border-amber-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
+          >
+           Cancel
           </button>
         </form>
       </div>

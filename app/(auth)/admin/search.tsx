@@ -23,8 +23,8 @@ const Search = ({ placeholder }: { placeholder?: string }) => {
       <input
         // value={search}
         defaultValue={searchParams.get("query")?.toString()}
-        // placeholder={placeholder}
-        placeholder="Search for user"
+        placeholder={placeholder}
+        // placeholder="Search for user"
         onChange={e => handleSearch(e.target.value)}
         className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
       />
