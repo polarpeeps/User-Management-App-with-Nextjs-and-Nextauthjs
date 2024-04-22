@@ -40,7 +40,7 @@ const EditTenantPage= () => {
 
   return (
     <section className="mt-24 flex-col justify-center items-center p-16">
-      <h1>Update user details  </h1>
+      <h1>Update Tenant details  </h1>
       <div className={styles.container}>
       
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -95,7 +95,7 @@ const EditTenantPage= () => {
             className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px] mt-4"
             type="submit"
           >
-  Update User
+  Update Tenant
           </button>
           <button
             onClick={handleButtonClick}

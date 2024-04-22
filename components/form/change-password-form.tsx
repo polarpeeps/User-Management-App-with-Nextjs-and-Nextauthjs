@@ -131,7 +131,7 @@ const ChangePasswordForm = ({
         </Button>
         <Button
           onClick={() => router.back()}
-          className="w-full mt-2"
+          className="w-full mt-2 bg-red-600"
           disabled={pending || isLoggingOut}
           variant="outline"
         >
