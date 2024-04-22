@@ -30,6 +30,11 @@ npm run dev
 # run this command a couple of time if theres a vulnerability it will be fixed 
 npm audit fix
 ```
+# Login as admin
+```
+id:admin@gmail.com
+pass:admin@123
+```
 ## Important
 The mailing server i have used will work for developers only so u might not be able to receive mails but you can also use the custom mailing service that i have used by signing-up to [Resend mail](https://resend.com/emails) here is the attachment of how the mails look after receiving
 ![Mail](./Screenshot%202024-04-21%20150413.png)
