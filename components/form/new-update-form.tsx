@@ -22,14 +22,18 @@ const UpdateUserPage= () => {
   const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');
   const {data: session }=useSession();
-  // console.log(session?.user.id)
   const id=session?.user._id;
   const pname=session?.user.name;
   const pemail=session?.user.email;
-  // const showtens=session?.user.tenant;
-  // if(showtens){
-  //   setTenants(session?.user.tenant)
-  // }
+  const tener=session?.user.tenant;
+  useEffect(() => {
+
+    if (session?.user.tenant) {
+      setTenants(session.user.tenant);
+    }
+    setEmail(session?.user.email || '');
+    setName(session?.user.name || '');
+  }, [session?.user.tenant, session?.user.email, session?.user.name]);
   const handleTenantChange = (index: number, field: keyof Tenant, value: string) => {
     const newTenants = tenants.map((tenant, tenantIndex) =>
       index === tenantIndex ? { ...tenant, [field]: value } : tenant
@@ -100,19 +104,25 @@ const UpdateUserPage= () => {
           </div>
 
           {/* Tenant Fields */}
-          {tenants.map((tenant, index) => (
+          {tenants?.map((tenant, index) => (
             <div key={index} className="flex flex-col gap-4">
+              <label htmlFor="tenant-name-input" className="block text-sm font-medium mb-2 dark:text-white">
+    Tenant Name
+              </label>
               <input
                 type="text"
-                placeholder="Tenant Name"
-                value={tenant.tenantName}
+                name="tenant-name-input"
+                placeholder={tenant.tenantName}
                 onChange={(e) => handleTenantChange(index, 'tenantName', e.target.value)}
                 className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
               />
+              <label htmlFor="tenant-role-input" className="block text-sm font-medium mb-2 dark:text-white">
+    Role
+              </label>
               <input
                 type="text"
-                placeholder="Role"
-                value={tenant.role}
+                name="tenant-role-input"
+                placeholder={tenant.role}
                 onChange={(e) => handleTenantChange(index, 'role', e.target.value)}
                 className="bg-transparent border-2 border-[#3e3e3e] rounded-lg text-white px-6 py-3 text-base hover:border-[#fff] cursor-pointer transition"
               />

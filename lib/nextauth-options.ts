@@ -49,7 +49,7 @@ export const nextauthOptions: NextAuthOptions = {
           token.name = user.name;
           token._id = user._id;
           token.role = user.role;
-          token.tenants=user.tenants;
+          token.tenants=user.tenant;
           token.provider = user.provider
         }
       }
